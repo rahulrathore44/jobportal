@@ -7,6 +7,7 @@ com\lab\jobportal\security\CustomBasicAuthenticationEntryPoint.class
 com\lab\jobportal\model\Job.class
 com\lab\jobportal\message\CustomMessage.class
 com\lab\jobportal\controller\SecureJobPortalController.class
+com\lab\jobportal\config\SecurityConstants.class
 com\lab\jobportal\ServerPortCustomizer.class
 com\lab\jobportal\security\SecurityConfig.class
 com\lab\jobportal\model\Project.class

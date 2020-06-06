@@ -9,7 +9,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
-
+import static com.lab.jobportal.config.SecurityConstants.NORMAL_PATH;
 import java.util.Arrays;
 
 import org.junit.Before;
@@ -36,7 +36,6 @@ import com.lab.jobportal.model.Project;
 public class TestJobPrortalControllerPutEndPoint {
 
 	private static final String JOB_TITLE = "Software Engg";
-	private final String contextPath = "/normal/webapi";
 	private Gson gson = new GsonBuilder().setPrettyPrinting().create();
 	private XmlMapper xmlMapper = new XmlMapper();
 
@@ -57,7 +56,7 @@ public class TestJobPrortalControllerPutEndPoint {
 	public void setUp() {
 		String jsonContent = gson.toJson(getJobWithRandomId());
 		try {
-			mvc.perform(post(contextPath + "/add").accept(MediaType.APPLICATION_JSON)
+			mvc.perform(post(NORMAL_PATH + "/add").accept(MediaType.APPLICATION_JSON)
 					.contentType(MediaType.APPLICATION_JSON).content(jsonContent)).andExpect(status().isCreated());
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -69,11 +68,11 @@ public class TestJobPrortalControllerPutEndPoint {
 		Job updateJob = getJobWithRandomId();
 		updateJob.setJobTitle(JOB_TITLE + "Update");
 		String updateJsonContent = gson.toJson(updateJob);
-		mvc.perform(put(contextPath + "/update").accept(MediaType.APPLICATION_JSON)
+		mvc.perform(put(NORMAL_PATH + "/update").accept(MediaType.APPLICATION_JSON)
 				.contentType(MediaType.APPLICATION_JSON).content(updateJsonContent)).andExpect(status().isOk())
 				.andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
 				.andExpect(jsonPath("jobId", is(id)));
-		mvc.perform(get(contextPath + "/find").queryParam("id", String.valueOf(id)).queryParam("jobTitle",
+		mvc.perform(get(NORMAL_PATH + "/find").queryParam("id", String.valueOf(id)).queryParam("jobTitle",
 				JOB_TITLE + "Update")).andExpect(status().isOk());
 	}
 
@@ -82,17 +81,17 @@ public class TestJobPrortalControllerPutEndPoint {
 		Job updateJob = getJobWithRandomId();
 		updateJob.setJobTitle(JOB_TITLE + "Update xml");
 		String updateJobXmlContent = xmlMapper.writeValueAsString(updateJob);
-		mvc.perform(put(contextPath + "/update").accept(MediaType.APPLICATION_XML).contentType(MediaType.APPLICATION_XML)
+		mvc.perform(put(NORMAL_PATH + "/update").accept(MediaType.APPLICATION_XML).contentType(MediaType.APPLICATION_XML)
 				.content(updateJobXmlContent)).andExpect(status().isOk())
 				.andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_XML))
 				.andExpect(content().node(hasXPath("/Job/jobTitle", equalTo(JOB_TITLE + "Update xml"))));
-		mvc.perform(get(contextPath + "/find").queryParam("id", String.valueOf(id)).queryParam("jobTitle", JOB_TITLE + "Update xml"))
+		mvc.perform(get(NORMAL_PATH + "/find").queryParam("id", String.valueOf(id)).queryParam("jobTitle", JOB_TITLE + "Update xml"))
 				.andExpect(status().isOk());
 	}
 
 	@Test
 	public void test_put_end_point_with_empty_body() throws Exception {
-		mvc.perform(put(contextPath + "/update").accept(MediaType.APPLICATION_XML).contentType(MediaType.APPLICATION_XML))
+		mvc.perform(put(NORMAL_PATH + "/update").accept(MediaType.APPLICATION_XML).contentType(MediaType.APPLICATION_XML))
 				.andExpect(status().isBadRequest());
 	}
 }

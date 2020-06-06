@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-
+import static com.lab.jobportal.config.SecurityConstants.SECURE_PATH;
 import com.lab.jobportal.exception.JobNotFoundException;
 import com.lab.jobportal.exception.RuntimeOperationException;
 import com.lab.jobportal.impl.IJobDescription;
@@ -29,17 +29,16 @@ import io.swagger.annotations.Api;
  **/
 @Api(value = "Job Portal Secure", description = "End Point for Job Portal Application secure with Basic Auth")
 @RestController
-@RequestMapping(path = {"/secure/webapi"})
+@RequestMapping(path = {SECURE_PATH})
 public class SecureJobPortalController {
 	private IJobDescription jobDescriptionImpl = new JobDescriptionImpl();
 	private final Logger oLog = LoggerFactory.getLogger(SecureJobPortalController.class);
-	private final String contextPath = "/secure/webapi";
 
 	@RequestMapping(path = { "/all" }, method = RequestMethod.GET, produces = {
 			MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE })
 
 	public ResponseEntity<List<Job>> getAllJobDescription() {
-		oLog.info("GET " + contextPath + "/all ");
+		oLog.info("GET " + SECURE_PATH + "/all ");
 		if (jobDescriptionImpl.getAllJobDescription().isEmpty()) {
 			return new ResponseEntity<List<Job>>(jobDescriptionImpl.getAllJobDescription(), HttpStatus.NO_CONTENT);
 		}
@@ -49,7 +48,7 @@ public class SecureJobPortalController {
 	@RequestMapping(path = { "/remove/{id}" }, method = RequestMethod.DELETE, produces = {
 			MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE })
 	public ResponseEntity<Object> deleteJobDescriptionUsingId(@PathVariable("id") int id) {
-		oLog.info(String.format("DELETE " + contextPath + "/remove/%s", id));
+		oLog.info(String.format("DELETE " + SECURE_PATH + "/remove/%s", id));
 		Optional<Job> isDeleted = jobDescriptionImpl.deleteJobDescription(id);
 		if (!isDeleted.isPresent()) {
 			throw new JobNotFoundException(String.format("Entry with id = %s not found", id));
@@ -61,7 +60,7 @@ public class SecureJobPortalController {
 			MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE }, consumes = {
 					MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE })
 	public ResponseEntity<Object> createJobDescription(@RequestBody Job aJob) {
-		oLog.info(String.format("POST " + contextPath + "/add with data = %s", aJob.toString()));
+		oLog.info(String.format("POST " + SECURE_PATH + "/add with data = %s", aJob.toString()));
 		try {
 			jobDescriptionImpl.createJobDescription(aJob);
 			return new ResponseEntity<Object>(aJob, HttpStatus.CREATED);
@@ -75,7 +74,7 @@ public class SecureJobPortalController {
 			MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE }, consumes = {
 					MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE })
 	public ResponseEntity<Object> updateJobDescription(@RequestBody Job aJob) {
-		oLog.info(String.format("PUT " + contextPath + "/update with data = %s", aJob.toString()));
+		oLog.info(String.format("PUT " + SECURE_PATH + "/update with data = %s", aJob.toString()));
 		Optional<Job> isUpdated = jobDescriptionImpl.updateJobDescription(aJob);
 		if (!isUpdated.isPresent()) {
 			throw new JobNotFoundException(String.format("Failed to update Entry %s", aJob.toString()));
@@ -86,7 +85,7 @@ public class SecureJobPortalController {
 	@RequestMapping(path = { "/find" }, method = RequestMethod.GET, produces = {
 			MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE })
 	public ResponseEntity<Object> findJobDescription(@RequestParam int id, @RequestParam String jobTitle) {
-		oLog.info(String.format("GET " + contextPath + "/find?id=%s&jobTitle=%s", id, jobTitle));
+		oLog.info(String.format("GET " + SECURE_PATH + "/find?id=%s&jobTitle=%s", id, jobTitle));
 		Optional<Job> isFound = jobDescriptionImpl.findJobDescription(id, jobTitle);
 		if (!isFound.isPresent()) {
 			throw new JobNotFoundException(String.format("Failed to find job with id=%s, jobTitle=%s", id, jobTitle));
@@ -98,7 +97,7 @@ public class SecureJobPortalController {
 			MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE })
 	public ResponseEntity<Object> updateJobDetails(@RequestParam int id, @RequestParam String jobTitle,
 			@RequestParam String jobDescription) {
-		oLog.info(String.format("PATCH " + contextPath + "/update/details?id=%s&jobTitle=%s&jobDescription=%s", id,
+		oLog.info(String.format("PATCH " + SECURE_PATH + "/update/details?id=%s&jobTitle=%s&jobDescription=%s", id,
 				jobTitle, jobDescription));
 		Optional<Job> isFound = jobDescriptionImpl.updateJobDetails(id, jobTitle, jobDescription);
 		if (!isFound.isPresent()) {

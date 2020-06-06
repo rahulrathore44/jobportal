@@ -8,7 +8,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
-
+import static com.lab.jobportal.config.SecurityConstants.NORMAL_PATH;
 import java.util.Arrays;
 
 import org.junit.Test;
@@ -34,8 +34,6 @@ import com.lab.jobportal.model.Project;
 public class TestJobPrortalControllerPostEndPoint {
 
 	private static final String JOB_TITLE = "Software Engg";
-	private final String contextPath = "/normal/webapi";
-
 	@Autowired
 	private MockMvc mvc;
 
@@ -53,11 +51,11 @@ public class TestJobPrortalControllerPostEndPoint {
 	public void test_post_end_point_with_json_data() throws Exception {
 		Gson gson = new GsonBuilder().setPrettyPrinting().create();
 		String jsonContent = gson.toJson(getJobWithRandomId());
-		mvc.perform(post(contextPath + "/add").accept(MediaType.APPLICATION_JSON).contentType(MediaType.APPLICATION_JSON)
+		mvc.perform(post(NORMAL_PATH + "/add").accept(MediaType.APPLICATION_JSON).contentType(MediaType.APPLICATION_JSON)
 				.content(jsonContent)).andExpect(status().isCreated())
 				.andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
 				.andExpect(jsonPath("jobId", is(id)));
-		mvc.perform(get(contextPath + "/find").queryParam("id", String.valueOf(id)).queryParam("jobTitle", JOB_TITLE))
+		mvc.perform(get(NORMAL_PATH + "/find").queryParam("id", String.valueOf(id)).queryParam("jobTitle", JOB_TITLE))
 				.andExpect(status().isOk());
 	}
 
@@ -65,17 +63,17 @@ public class TestJobPrortalControllerPostEndPoint {
 	public void test_post_end_point_with_xml_data() throws Exception {
 		XmlMapper xmlMapper = new XmlMapper();
 		String xmlContent = xmlMapper.writeValueAsString(getJobWithRandomId());
-		mvc.perform(post(contextPath + "/add").accept(MediaType.APPLICATION_XML).contentType(MediaType.APPLICATION_XML)
+		mvc.perform(post(NORMAL_PATH + "/add").accept(MediaType.APPLICATION_XML).contentType(MediaType.APPLICATION_XML)
 				.content(xmlContent)).andExpect(status().isCreated())
 				.andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_XML))
 				.andExpect(content().node(hasXPath("/Job/jobTitle", equalTo(JOB_TITLE))));
-		mvc.perform(get(contextPath + "/find").queryParam("id", String.valueOf(id)).queryParam("jobTitle", JOB_TITLE))
+		mvc.perform(get(NORMAL_PATH + "/find").queryParam("id", String.valueOf(id)).queryParam("jobTitle", JOB_TITLE))
 				.andExpect(status().isOk());
 	}
 
 	@Test
 	public void test_post_end_point_with_empty_body() throws Exception {
-		mvc.perform(post(contextPath + "/add").accept(MediaType.APPLICATION_XML).contentType(MediaType.APPLICATION_XML))
+		mvc.perform(post(NORMAL_PATH + "/add").accept(MediaType.APPLICATION_XML).contentType(MediaType.APPLICATION_XML))
 				.andExpect(status().isBadRequest());
 	}
 }

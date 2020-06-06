@@ -1,5 +1,6 @@
 C:\Data\GitHub\jobportal\src\main\java\com\lab\jobportal\doc\SwaggerConfig.java
 C:\Data\GitHub\jobportal\src\main\java\com\lab\jobportal\ServerPortCustomizer.java
+C:\Data\GitHub\jobportal\src\main\java\com\lab\jobportal\config\SecurityConstants.java
 C:\Data\GitHub\jobportal\src\main\java\com\lab\jobportal\security\CustomBasicAuthenticationEntryPoint.java
 C:\Data\GitHub\jobportal\src\main\java\com\lab\jobportal\controller\FileUploadController.java
 C:\Data\GitHub\jobportal\src\main\java\com\lab\jobportal\JobPortal.java

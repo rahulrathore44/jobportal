@@ -1,4 +1,5 @@
 com\lab\jobportal\controller\TestJobPrortalControllerGetEndPoint.class
+com\lab\jobportal\controller\TestJobPrortalControllerPutEndPoint.class
 com\lab\jobportal\AppTest.class
 com\lab\jobportal\controller\secure\TestSecureJobPrortalControllerGetEndPoint.class
 com\lab\jobportal\controller\TestJobPrortalControllerPostEndPoint.class

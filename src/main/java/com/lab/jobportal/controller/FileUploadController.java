@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
+import static com.lab.jobportal.config.SecurityConstants.NORMAL_PATH;
 
 import com.lab.jobportal.message.CustomMessage;
 
@@ -25,14 +26,13 @@ import io.swagger.annotations.Api;
  **/
 @Api(value = "File Upload", description = "End Point to upload the File")
 @RestController
-@RequestMapping(path = { "/normal/webapi" })
+@RequestMapping(path = { NORMAL_PATH })
 public class FileUploadController {
 	private final Logger oLog = LoggerFactory.getLogger(FileUploadController.class);
-	private final String contextPath = "/normal/webapi";
 
 	@RequestMapping(path = { "/upload" }, method = RequestMethod.POST, consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
 	public ResponseEntity<Object> fileUpload(@RequestParam("file") MultipartFile file) {
-		oLog.info("POST " + contextPath + "/upload ");
+		oLog.info("POST " + NORMAL_PATH + "/upload ");
 		String fileLocation = System.getProperty("java.io.tmpdir");
 		try {
 			File convertFile = new File(fileLocation + File.separator + file.getOriginalFilename());
