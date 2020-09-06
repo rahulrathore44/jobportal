@@ -2,4 +2,7 @@ C:\Data\GitHub\jobportal\src\test\java\com\lab\jobportal\controller\TestJobPrort
 C:\Data\GitHub\jobportal\src\test\java\com\lab\jobportal\AppTest.java
 C:\Data\GitHub\jobportal\src\test\java\com\lab\jobportal\controller\secure\TestSecureJobPrortalControllerGetEndPoint.java
 C:\Data\GitHub\jobportal\src\test\java\com\lab\jobportal\controller\TestJobPrortalControllerGetEndPoint.java
+C:\Data\GitHub\jobportal\src\test\java\com\lab\jobportal\controller\TestJobPrortalControllerDeleteEndPoint.java
+C:\Data\GitHub\jobportal\src\test\java\com\lab\jobportal\controller\TestJobPrortalControllerFindEndPoint.java
+C:\Data\GitHub\jobportal\src\test\java\com\lab\jobportal\controller\TestJobPrortalControllerUpdateQueryParam.java
 C:\Data\GitHub\jobportal\src\test\java\com\lab\jobportal\controller\TestJobPrortalControllerPutEndPoint.java
